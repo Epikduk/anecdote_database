@@ -2,6 +2,8 @@ import random
 number_generated_anecdotes = 30 # Число генерируемых анекдотов
 number_funny_anecdotes = 15 # Число смешных анекдотов
 
+# Привет Борис
+
 def main():
     anecdotes = random_anecdote()
     list_of_anecdotes = full_list_of_anecdotes(anecdotes)
