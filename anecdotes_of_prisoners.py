@@ -1,8 +1,19 @@
 import random
+
+# TODO Названия констант лучше делать в UPPER_CASE
+# TODO Комментарии лучше давать в случае сложной логики в коде или верхнеуровнего описания/документации, здесь название переменной полностью дублирует комментарий
 number_generated_anecdotes = 30 # Число генерируемых анекдотов
 number_funny_anecdotes = 15 # Число смешных анекдотов
 
 def main():
+    '''
+    TODO лучше завести модуль anecdotes_repository, где все переменные хранящие в себе данные были бы глобальными
+    
+    завести API в модуле для работы с этими переменными - методы add, get, remove 
+    и поддерживать логику работы в модуле не вытягивая внутренние кишки логики работы с пачкой отдельных структур
+    
+    а в главном модуле работать только с пользователем и его вводом
+    '''
     anecdotes = random_anecdote()
     list_of_anecdotes = full_list_of_anecdotes(anecdotes)
     funny_anecdotes = random_funny_anecdote()
@@ -13,6 +24,15 @@ def main():
     print('Если природа обделила тебя умом и сообразительностью, то не отчаивайся. Я здесь, чтобы помочь тебе.')
     user_answer_choice = start()
     while user_answer_choice in count_list_of_answers_3():
+        # TODO в этом участке кода нет никакой информации о том что значит выбор 1, 2, 3, 4. Тяжело читать и понимать что это значит, такое лучше выносить в enum или константы
+        '''
+        TODO сами блоки внутри if-ов хорошо бы вынести в отдельные методы 
+            if 1: 
+                list_anecdotes_interaction()
+            if 2:
+                funny_anecdotes_interaction()
+            и т.д.
+        '''
         if user_answer_choice == '1':
             show_full_list_of_anecdotes(list_of_anecdotes)
             user_full_list_of_anecdotes = user_choice_full_anecdote_list()
@@ -46,6 +66,12 @@ def start():
             print('\nЯ тебя не понял, повтори ввод команды.')
     return user_choice
 
+'''
+ TODO поясни пожалуйста в лс что хотелось сделать методами count_list_of_answers_3 и count_list_of_answers_4 - кажутся очень странными и их скорее всего нужно переосмыслить и удалить
+ из проблем:
+ - _3 и _4 явно можно вынести в аргумент и заводить список
+ - сам вызов range() делает как будто то же самое, за исключением приведения к str
+''' 
 def count_list_of_answers_3():
     count = 1
     list_of_answers = []
@@ -63,6 +89,7 @@ def count_list_of_answers_4():
     return list_of_answers
 
 def random_anecdote():
+    # TODO 101 непонятно почему взятое число, его бы в константу вынести
     anecdotes = list(range(101))
     del anecdotes[0]
     anecdotes = random.sample(anecdotes, number_generated_anecdotes)
@@ -121,6 +148,8 @@ def user_choice_full_anecdote_funny_list():
 def add_anecdote(list_of_anecdotes, list_of_funny_anecdotes, funny_anecdotes_checking):
     a = True
     anecdote_number = None
+    # FYI while a тоже самое что и while a == True
+    # TODO 2 вложенных цикла пользовательского ввода пугают, хорошо бы вынести такое в отдельный метод и переиспользовать его еще в методах ниже
     while a == True:
         user_choice = None
         b = True
